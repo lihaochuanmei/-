@@ -14,8 +14,16 @@ $(function () {
                 if (res.status !== 0) {
                     return "获取用户基本信息失败"
                 }
-                console.log(res)
+                // console.log(res)
+
                 renderAvatar(res.data)
+            },
+            // 不论post还是get, 请求完成的时候都会调用compelit
+            complete: function (res) {
+                if (res.responseJSON.status === 1 && res.responseJSON.message === "身份认证失败") {
+                    localStorage.removeItem('token')
+                    location.href = '/login.html'
+                }
             }
         })
     }
@@ -57,4 +65,7 @@ $(function () {
 
         })
     })
+
+
+
 })
